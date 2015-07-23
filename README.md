@@ -23,6 +23,6 @@ I am currently targetting x86 & x86-64 platforms only.
 The whole project is for educational purpose only. Feel free to use any part of this work.
 
 It is mainly inspired from Linux implementation.
-The two main sources of knowledge are : osdev.com & Linux kernel
+The two main sources of knowledge are : osdev.org & Linux kernel
 
 Work should start between 1/08/2015 & 10/08/2015
