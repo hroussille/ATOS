@@ -4,18 +4,27 @@ The goal of the project is to build a Kernel and maybe add some userspace applic
 The kernel should handle :
 
 -time
+
 -synchronization mechanism
+
 -time management
+
 -scheduler
+
 -I/O operations
+
 -multiprocessing
+
 -custom file system
+
 -memory management
 
 Some feature may be added later :
 
 -preemption
+
 -well known filesystem
+
 -Loadable drivers
 
 I am currently targetting x86 & x86-64 platforms only.
