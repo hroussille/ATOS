@@ -18,6 +18,8 @@ Some feature may be added later :
 -well known filesystem
 -Loadable drivers
 
+I am currently targetting x86 & x86-64 platforms only.
+
 The whole project is for educational purpose only. Feel free to use any part of this work.
 
 It is mainly inspired from Linux implementation.
