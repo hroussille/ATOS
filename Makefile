@@ -1,56 +1,54 @@
-AS 				= nasm
-CC 				= i686-elf-gcc
+INCLUDE_N				= includes
+OBJECTS_N 				= obj
+
+MAKEFILE_N 				= Makefile
+
+ROOT					= ATOS/
+CORE_DIR 				= core/
+DISPLAY_DIR 			= display/
+DISPLAY_BASIC_DIR 		= basic/
+ENTRY_DIR 				= entry/
+LIBRARY_DIR 			= library/
+
+CURRENT_DIR 			= $(shell pwd)
+
+INCLUDES_DIR 			= -I $(CURRENT_DIR)/$(ROOT)$(CORE_DIR)$(INCLUDE_N) \
+			  			  -I $(CURRENT_DIR)/$(ROOT)$(DISPLAY_DIR)$(DISPLAY_BASIC_DIR)$(INCLUDE_N) \
+			  			  -I $(CURRENT_DIR)/$(ROOT)$(ENTRY_DIR)$(INCLUDE_N) \
+			  			  -I $(CURRENT_DIR)/$(ROOT)$(LIBRARY_DIR)$(INCLUDE_N) \
+
+OBJECTS_DIR 			= $(ROOT)$(CORE_DIR)$(OBJECTS_N)/* \
+						  $(ROOT)$(DISPLAY_DIR)$(OBJECTS_N)/* \
+						  $(ROOT)$(ENTRY_DIR)$(OBJECTS_N)/* \
+						  $(ROOT)$(LIBRARY_DIR)$(OBJECTS_N)/* \
+
+CC 						= i686-elf-gcc
+LD_SCRIPT				= linker/linker.ld
+LD_FLAGS				= -T $(LD_SCRIPT) -ffreestanding -O2 -nostdlib
+LD						= $(CC) $(LD_FLAGS)
+
+NAME 					= release/boot/atos.bin
+ISO_NAME				= atos.iso
+
+all: 
 
 
-ASFLAGS			= -f elf32
-CFLAGS 			= -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+	$(MAKE) -C $(ROOT)$(CORE_DIR) 		INCLUDES="$(INCLUDES_DIR)"
+	$(MAKE) -C $(ROOT)$(DISPLAY_DIR)	INCLUDES="$(INCLUDES_DIR)"
+	$(MAKE) -C $(ROOT)$(ENTRY_DIR)		INCLUDES="$(INCLUDES_DIR)"
+	$(MAKE) -C $(ROOT)$(LIBRARY_DIR)	INCLUDES="$(INCLUDES_DIR)"
 
-
-LINKERSCRIPT  	= linker/linker.ld 
-LINKERFLAGS		= -T $(LINKERSCRIPT) -ffreestanding -O2 -nostdlib
-LD				= $(CC) $(LINKER) $(LINKERFLAGS)
-
-
-SRCSDIR     	= ./ATOS
-OBJSDIR     	= $(SRCSDIR)/objs/
-
-SRCS      		= $(SRCSDIR)/entry/sources/entry.S \
-				  $(SRCSDIR)/core/sources/kernel.c \
-				  $(SRCSDIR)/display/basic/sources/vga.c \
-				  $(SRCSDIR)/library/sources/strlen.c \
-
-
-INCS			= -I $(SRCSDIR)/entry/includes/ \
-				  -I $(SRCSDIR)/core/includes/ \
-				  -I $(SRCSDIR)/display/basic/includes/ \
-				  -I $(SRCSDIR)/library/includes/ \
-
-NAME     		= release/boot/atos.bin
-
-OBJSCC   		= $(SRCS:$(SRCSDIR)%.c=$(OBJSDIR)%.o) 
-OBJSAS  		= $(SRCS:$(SRCSDIR)%.S=$(OBJSDIR)%.o)
-
-RM 				= rm -rf 
-
-
-all: $(NAME)
-
-$(OBJSDIR)%.o: $(SRCSDIR)%.c
-		$(CC) $(INCS) -c $< -o $(addprefix $(OBJSDIR), $(notdir $@))  $(CFLAGS)
-
-$(OBJSDIR)%.o: $(SRCSDIR)%.S
-		$(AS) $(INCS) $< -o $(addprefix $(OBJSDIR), $(notdir $@))  $(ASFLAGS)
-
-$(NAME):   $(OBJSCC) $(OBJSAS)
-		$(LD) -o $(NAME) $(OBJSDIR)*.o
-
-iso: 
-
+	$(LD) -o $(NAME) $(OBJECTS_DIR)
 	grub-mkrescue -o atos.iso release/
-		
-clean: 
-		$(RM) ATOS/objs/*.o
 
-fclean: clean
-		$(RM) $(NAME)
-		$(RM) atos.iso
+
+clean:
+
+	$(MAKE) clean -C  $(ROOT)$(CORE_DIR)
+	$(MAKE) clean -C  $(ROOT)$(DISPLAY_DIR)
+	$(MAKE) clean -C  $(ROOT)$(ENTRY_DIR)
+	$(MAKE) clean -C  $(ROOT)$(LIBRARY_DIR)
+
+	rm -rf $(NAME)
+	rm -rf $(ISO_NAME)
+

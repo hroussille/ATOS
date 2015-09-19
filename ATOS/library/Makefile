@@ -1,9 +1,9 @@
-vpath %.c ./basic/sources
+vpath %.c ./sources
 
 CC 				= i686-elf-gcc
 CFLAGS 			= -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
-SRCS 	= vga.c \
+SRCS 	= strlen.c \
 
 OBJS	= $(patsubst %.c,obj/%.o,$(SRCS))
 
