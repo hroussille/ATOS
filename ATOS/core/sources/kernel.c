@@ -11,7 +11,8 @@ void kernel_main() {
 	/* Initialize terminal interface */
 	
 	terminal_initialize();
-	terminal_writestring("Atos is alive !");
+	terminal_writestring("Atos is alive !\n");
+	terminal_writestring("Atos can write a new line !\n");
 	
 	while (1);
 }

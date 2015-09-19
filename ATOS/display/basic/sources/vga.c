@@ -37,11 +37,12 @@ void terminal_putchar(char c) {
 
 	if (c == '\n')
 	{
-		terminal_column = terminal_column + 1;
-		terminal_row    = 0;
+		terminal_row = terminal_row + 1;
+		terminal_column    = 0;
+		return;
 	}
 
-	if (terminal_column == VGA_WIDTH)
+	if (terminal_column >= VGA_WIDTH)
 		terminal_column = 0;
 	
 	terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
