@@ -1,5 +1,10 @@
 #include "vga.h"
 #include "strlen.h"
+#include "bootmessages.h"
+#include <stdarg.h>
+
+#define HEXA_MIN "0123456789abcdef"
+#define HEXA_CAP "0123456789ABCDEF"
 
 uint8_t make_color(enum vga_color fg, enum vga_color bg) {
 	return fg | bg << 4;
@@ -53,9 +58,89 @@ void terminal_putchar(char c) {
 	}
 }
  
-void terminal_writestring(const char* data) {
+void terminal_writestring(char* data) {
 	size_t datalen = strlen(data);
 	for (size_t i = 0; i < datalen; i++)
 		terminal_putchar(data[i]);
 }
  
+void terminal_putnbr(int n)
+{
+  if (n >= 10)
+    {
+      terminal_putnbr(n / 10);
+      terminal_putnbr(n % 10);
+    }
+  else
+    terminal_putchar(48 + n);
+}
+
+void    terminal_putnbr_base(int nb, char *base)
+{
+  int   result;
+  int   diviseur;
+  int   size_base;
+
+  size_base = strlen(base);
+  if (nb < 0)
+    {
+      terminal_putchar('-');
+      nb = -nb;
+    }
+  diviseur = 1;
+  while ((nb / diviseur) >= size_base)
+    diviseur = diviseur * size_base;
+  while (diviseur > 0)
+    {
+      result = (nb /diviseur) % size_base;
+      terminal_putchar(base[result]);
+      diviseur = diviseur / size_base;
+    }
+}
+
+void 	terminal_printf(char * fmt, ...)
+{
+   va_list ap;
+   int i;
+
+   va_start(ap, fmt);
+   i = 0;
+
+   while (fmt[i] != '\0')
+   {
+   	if (fmt[i] == '%')
+        {
+          if (fmt[i + 1] == 's')
+            terminal_writestring(va_arg(ap, char *));
+          else if (fmt[i + 1] == 'd' || fmt[i + 1] == 'i')
+            terminal_putnbr(va_arg(ap, int));
+          else if (fmt[i + 1] == 'c')
+            terminal_putchar((char)va_arg(ap, int));
+          else if (fmt[i + 1] == 'x' || fmt[i + 1] == 'X')
+            terminal_putnbr_base(va_arg(ap, unsigned int), (fmt[i + 1] == 'x' ? HEXA_MIN : HEXA_CAP));
+          else
+            terminal_putchar(fmt[i + 1]);
+          i++;
+        }
+      else
+        terminal_putchar(fmt[i]);
+      i++;
+    }
+   va_end(ap);
+}
+
+void vgatestko()
+{
+	terminal_setcolor(make_color(COLOR_RED, COLOR_BLACK));		
+	terminal_writestring(" [KO] \n");
+	terminal_printf(CRITICAL);
+	terminal_setcolor(make_color(COLOR_LIGHT_GREY, COLOR_BLACK));
+}
+
+void vgatestok()
+{
+	terminal_setcolor(make_color(COLOR_GREEN,COLOR_BLACK));
+	terminal_writestring(" [OK] \n");
+	terminal_setcolor(make_color(COLOR_LIGHT_GREY, COLOR_BLACK));
+
+}

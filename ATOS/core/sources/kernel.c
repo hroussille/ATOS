@@ -4,18 +4,31 @@
 #include <stddef.h>
 #include <stdint.h>
  
+#include "multiboot.h"
+#include "memtest.h"
+#include "memset.h"
 #include "vga.h"
+#include "interupt.h"
 
-void kernel_main() {
+
+void kernel_main(multiboot_info_t* mbd, unsigned int magic) {
 	
 	/* Initialize terminal interface */
 	
+	char vendorID[4];
+
 	terminal_initialize();
 
-	while (1)
-	{
-		terminal_writestring("Atos is alive !\n");
-		terminal_writestring("Atos can write a new line !\n");
-	}
-	
+	memset(vendorID, 0, 4);
+	if (vendorid(vendorID) == 0)
+		terminal_printf("CPU ID : %s\n", vendorID);
+
+	if (memtest(mbd, magic))
+		return;
+
+	if (initinterupts())
+		return;
+
+	while (1);
+
 }

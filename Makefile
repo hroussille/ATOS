@@ -7,7 +7,7 @@ ROOT					= ATOS/
 CORE_DIR 				= core/
 DISPLAY_DIR 			= display/
 DISPLAY_BASIC_DIR 		= basic/
-ENTRY_DIR 				= entry/
+ENTRY_DIR 				= assembly/
 LIBRARY_DIR 			= library/
 
 CURRENT_DIR 			= $(shell pwd)

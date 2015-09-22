@@ -44,6 +44,16 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y);
  
 void terminal_putchar(char c);
  
-void terminal_writestring(const char* data);
+void terminal_writestring(char* data);
+
+void terminal_putnbr(int n);
+
+void terminal_putnbr_base(int nb, char *base);
+
+void terminal_printf(char *fmt, ...);
+
+void vgatestok();
+
+void vgatestko();
 
 #endif // VGA_H
