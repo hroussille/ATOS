@@ -5,5 +5,9 @@
 #define MULTIBOOT_TEST	 "CHECKING MULTIBOOT_INFO "
 #define MEMORY_MAP_TEST	 "CHECKING MMAP INFO      "
 #define INIT_INTERUPTS	 "INIT INTERUPTS          "
+#define INIT_GDT		 "SETTING UP GDT          "
+#define INIT_IDT 		 "SETTING UP IDT          "
+#define INIT_ISRS		 "SETTING UP ISRS         "
+#define INIT_IRQ         "SETTING UP IRQ          "
 
 #endif // BOOTMESSAGES_H

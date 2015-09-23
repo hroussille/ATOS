@@ -9,9 +9,9 @@
 #include "memtest.h"
 #include "memset.h"
 #include "vga.h"
-#include "interupt.h"
 #include "vendorid.h"
 #include "crash.h"
+#include "initcore.h"
 
 
 void kernel_main(multiboot_info_t* mbd, unsigned int magic) {
@@ -29,7 +29,7 @@ void kernel_main(multiboot_info_t* mbd, unsigned int magic) {
 	if (memtest(mbd, magic))
 		return;
 
-	if (initinterupts())
+	if (initcore())
 		return;
 
 	BUG_ON

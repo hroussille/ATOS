@@ -118,6 +118,7 @@ void    terminal_putnbr_base(int nb, char *base)
   int   diviseur;
   int   size_base;
 
+
   size_base = strlen(base);
   if (nb < 0)
     {

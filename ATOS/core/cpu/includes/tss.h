@@ -1,6 +1,8 @@
 #ifndef TSS_H
 #define TSS_H
 
+#include <stdint.h>
+
 /*
 	The Task State Segment (TSS) is a special data structure for x86 processors.
 	Which holds information about a task. The TSS is primarily suited for hardware 
@@ -39,7 +41,9 @@ typedef struct tss_t
 	uint16_t	trap;
 	uint16_t	iomap_base;
 
-} __attribute__ ((packed)) tss;
+} __attribute__ ((packed)) tss_entry_t;
 
+void write_tss(int32_t num, uint16_t ss0, uint32_t esp0);
+extern void tss_flush();
 
 #endif // TSS_H
