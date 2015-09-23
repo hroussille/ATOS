@@ -20,8 +20,8 @@ unsigned int memtest(multiboot_info_t* mbd, unsigned int magic)
 		if (CHECK_BIT(mbd->flags, 6))
 		{
 			vgatestok();
-			terminal_printf("LOWER MEM : %d KB\n", mbd->mem_lower);
-			terminal_printf("UPPER MEM : %d KB\n", mbd->mem_upper);
+			terminal_printf("\nLower memory : %d KB\n", mbd->mem_lower);
+			terminal_printf("Upper memory : %d KB\n\n", mbd->mem_upper);
 		}
 
 		else

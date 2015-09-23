@@ -38,4 +38,3 @@ void outportl(unsigned short port, unsigned int data)
 {
 	asm volatile ("outl %%eax, %%dx" : : "dN" (port), "a" (data));
 }
-

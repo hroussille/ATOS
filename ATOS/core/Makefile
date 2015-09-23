@@ -1,17 +1,26 @@
+INCLUDE_N				= includes
+OBJECTS_N 				= obj
 
-SRCS := $(wildcard sources/*.c)
-OBJS := $(addprefix obj/,$(notdir $(SRCS:.c=.o)))
+MAKEFILE_N 				= Makefile
 
-CC 				= i686-elf-gcc
-CFLAGS 			= -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+BOOT					= boot/
+CPU 					= cpu/
+KERNEL 					= kernel/
+MEMORY 					= memory/
+
+CURRENT_DIR 			= $(shell pwd)
 
 
-all: 	$(OBJS)
-		
-obj/%.o: sources/%.c
-		$(CC) $(CFLAGS) -c -o $@ $< $(INCLUDES)
+all:
 
-clean : 
-		rm -rf obj/*
+	$(MAKE) -C $(ROOT)$(BOOT) 		INCLUDES="$(INCLUDES)"
+	$(MAKE) -C $(ROOT)$(CPU)		INCLUDES="$(INCLUDES)"
+	$(MAKE) -C $(ROOT)$(KERNEL)		INCLUDES="$(INCLUDES)"
+	$(MAKE) -C $(ROOT)$(MEMORY)		INCLUDES="$(INCLUDES)"
 
-fclean : clean
+clean:
+
+	$(MAKE) clean -C  $(BOOT)$(CORE_DIR)
+	$(MAKE) clean -C  $(CPU)$(DISPLAY_DIR)
+	$(MAKE) clean -C  $(KERNEL)$(ENTRY_DIR)
+	$(MAKE) clean -C  $(MEMORY)$(LIBRARY_DIR)

@@ -4,6 +4,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define VGA_BASE_ADDR (unsigned short *)0xB8000
+
 enum vga_color {
 	COLOR_BLACK = 0,
 	COLOR_BLUE = 1,
@@ -52,8 +54,14 @@ void terminal_putnbr_base(int nb, char *base);
 
 void terminal_printf(char *fmt, ...);
 
+void terminal_scroll();
+
+void terminal_move_cursor();
+
 void vgatestok();
 
 void vgatestko();
+
+
 
 #endif // VGA_H

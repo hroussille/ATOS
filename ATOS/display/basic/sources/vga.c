@@ -1,6 +1,11 @@
 #include "vga.h"
 #include "strlen.h"
 #include "bootmessages.h"
+
+#include "memcpy.h"
+#include "memset.h"
+#include "io.h"
+
 #include <stdarg.h>
 
 #define HEXA_MIN "0123456789abcdef"
@@ -15,7 +20,34 @@ uint16_t make_vgaentry(char c, uint8_t color) {
 	uint16_t color16 = color;
 	return c16 | color16 << 8;
 }
- 
+
+void terminal_move_cursor()
+{
+     unsigned temp;
+
+    temp = terminal_row * 80 + terminal_column;
+
+    outportb(0x3D4, 14);
+    outportb(0x3D5, temp >> 8);
+    outportb(0x3D4, 15);
+    outportb(0x3D5, temp);
+}
+
+void terminal_scroll()
+{
+  unsigned blank, temp;
+
+    blank = make_color(COLOR_BLACK, COLOR_BLACK);
+
+    if(terminal_row >= VGA_HEIGHT)
+    {
+        temp = terminal_row - 25 + 1;
+        memcpy (VGA_BASE_ADDR, VGA_BASE_ADDR + temp * 80, (25 - temp) * 80 * 2);
+        memset (VGA_BASE_ADDR + (25 - temp) * 80, blank , 80);
+        terminal_row = VGA_HEIGHT - 1;
+    }
+}
+
 void terminal_initialize() {
 	terminal_row = 0;
 	terminal_column = 0;
@@ -36,6 +68,7 @@ void terminal_setcolor(uint8_t color) {
 void terminal_putentryat(char c, uint8_t color, size_t x, size_t y) {
 	const size_t index = y * VGA_WIDTH + x;
 	terminal_buffer[index] = make_vgaentry(c, color);
+  terminal_move_cursor();
 }
  
 void terminal_putchar(char c) {
@@ -44,8 +77,12 @@ void terminal_putchar(char c) {
 	{
 		terminal_row = terminal_row + 1;
 		if (terminal_row >= VGA_HEIGHT)
-			terminal_row = 0;
+			{
+        terminal_scroll();
+        terminal_row--;
+      }
 		terminal_column    = 0;
+    terminal_move_cursor();
 		return;
 	}
 	

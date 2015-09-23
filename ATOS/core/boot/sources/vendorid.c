@@ -1,4 +1,4 @@
-#include <cpuid.h>
+#include "vendorid.h"
 
 
 int vendorid(char * buffer)

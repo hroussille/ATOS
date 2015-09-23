@@ -9,4 +9,8 @@
 
 #define DISABLE_IRQ	{ __asm__ __volatile__ ("cli"); }
 
+
+
+unsigned int initinterupts();
+
 #endif // INTERUPT
