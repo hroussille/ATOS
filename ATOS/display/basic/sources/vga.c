@@ -182,3 +182,25 @@ void vgatestok()
 	terminal_setcolor(make_color(COLOR_LIGHT_GREY, COLOR_BLACK));
 
 }
+
+void terminal_erase()
+{
+  unsigned int position;
+
+  if (terminal_row == 0 && terminal_column == 0)
+    return;
+
+  position = terminal_row * VGA_WIDTH + terminal_column;
+  terminal_buffer[position - 1] = make_vgaentry(' ', make_color(COLOR_LIGHT_GREY, COLOR_BLACK));
+
+  if (terminal_column == 0)
+    {
+      terminal_row--;
+      terminal_column = VGA_WIDTH;
+    }
+
+  else 
+    terminal_column--;
+
+  terminal_move_cursor();
+}

@@ -5,6 +5,7 @@
 #include "idt.h"
 #include "isrs.h"
 #include "irq.h"
+#include "pic.h"
 
 unsigned int initcore()
 {
@@ -29,7 +30,11 @@ unsigned int initcore()
 	ENABLE_IRQ
 	vgatestok();
 
-
+	/* Set up PIC */
+	terminal_writestring(INIT_PIC);
+	timer_phase(HZ);
+	timer_install();
+	vgatestok();
 
 	return (0);
 }

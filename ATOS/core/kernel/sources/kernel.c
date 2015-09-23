@@ -12,7 +12,8 @@
 #include "vendorid.h"
 #include "crash.h"
 #include "initcore.h"
-
+#include "irq.h"
+#include "keyboard.h"
 
 void kernel_main(multiboot_info_t* mbd, unsigned int magic) {
 	
@@ -31,6 +32,8 @@ void kernel_main(multiboot_info_t* mbd, unsigned int magic) {
 
 	if (initcore())
 		return;
+
+	irq_install_handler(1, &keyboard_handler);
 
 	BUG_ON
 }

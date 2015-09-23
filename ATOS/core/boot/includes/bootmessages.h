@@ -9,5 +9,6 @@
 #define INIT_IDT 		 "SETTING UP IDT          "
 #define INIT_ISRS		 "SETTING UP ISRS         "
 #define INIT_IRQ         "SETTING UP IRQ          "
+#define INIT_PIC 		 "SETTING UP PIC          "
 
 #endif // BOOTMESSAGES_H

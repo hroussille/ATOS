@@ -10,6 +10,7 @@ CORE_BOOT				= core/boot/
 CORE_CPU				= core/cpu/
 CORE_KERNEL				= core/kernel/
 CORE_MEMORY				= core/memory/
+CORE_DEVICE				= core/device/
 
 DISPLAY_DIR 			= display/
 DISPLAY_BASIC_DIR 		= basic/
@@ -23,9 +24,11 @@ INCLUDES_DIR 			= -I $(CURRENT_DIR)/$(ROOT)$(CORE_BOOT)$(INCLUDE_N) \
 						  -I $(CURRENT_DIR)/$(ROOT)$(CORE_CPU)$(INCLUDE_N) \
 						  -I $(CURRENT_DIR)/$(ROOT)$(CORE_KERNEL)$(INCLUDE_N) \
 						  -I $(CURRENT_DIR)/$(ROOT)$(CORE_MEMORY)$(INCLUDE_N) \
+			  			  -I $(CURRENT_DIR)/$(ROOT)$(CORE_DEVICE)$(INCLUDE_N) \
 			  			  -I $(CURRENT_DIR)/$(ROOT)$(DISPLAY_DIR)$(DISPLAY_BASIC_DIR)$(INCLUDE_N) \
 			  			  -I $(CURRENT_DIR)/$(ROOT)$(ENTRY_DIR)$(INCLUDE_N) \
 			  			  -I $(CURRENT_DIR)/$(ROOT)$(LIBRARY_DIR)$(INCLUDE_N) \
+
 
 OBJECTS_DIR 			= $(ROOT)$(CORE_DIR)$(OBJECTS_N)/* \
 						  $(ROOT)$(DISPLAY_DIR)$(OBJECTS_N)/* \

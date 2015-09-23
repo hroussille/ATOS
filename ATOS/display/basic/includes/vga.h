@@ -62,6 +62,6 @@ void vgatestok();
 
 void vgatestko();
 
-
+void terminal_erase();
 
 #endif // VGA_H
