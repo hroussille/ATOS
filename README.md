@@ -31,10 +31,8 @@ The whole project is for educational purpose. Feel free to use any part of this 
 
 The three main sources of knowledge are : 
 
--osdev.org
+-wiki.osdev.org
 
 -Linux kernel
 
 -www.osdever.net 
-
-Work should start between 1/08/2015 & 10/08/2015
